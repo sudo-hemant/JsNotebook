@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<script>
+(function() {
+  // Console interceptor - captures all console methods
+  const originalConsole = {
+    log: console.log,
+    error: console.error,
+    warn: console.warn,
+    info: console.info,
+    clear: console.clear
+  };
+
+  function serializeArg(arg) {
+    try {
+      if (arg instanceof Error) {
+        return { type: 'error', message: arg.message, stack: arg.stack };
+      }
+      if (typeof arg === 'function') {
+        return { type: 'function', value: arg.toString() };
+      }
+      if (typeof arg === 'undefined') {
+        return { type: 'undefined' };
+      }
+      if (typeof arg === 'symbol') {
+        return { type: 'symbol', value: arg.toString() };
+      }
+      if (arg === null) {
+        return { type: 'null' };
+      }
+      // Try to serialize as JSON
+      return { type: 'value', value: JSON.parse(JSON.stringify(arg)) };
+    } catch (e) {
+      return { type: 'unserializable', value: String(arg) };
+    }
+  }
+
+  function sendMessage(type, args) {
+    window.parent.postMessage({
+      type: 'console',
+      method: type,
+      args: args.map(serializeArg)
+    }, '*');
+  }
+
+  console.log = (...args) => { sendMessage('log', args); originalConsole.log(...args); };
+  console.error = (...args) => { sendMessage('error', args); originalConsole.error(...args); };
+  console.warn = (...args) => { sendMessage('warn', args); originalConsole.warn(...args); };
+  console.info = (...args) => { sendMessage('info', args); originalConsole.info(...args); };
+  console.clear = () => { sendMessage('clear', []); originalConsole.clear(); };
+
+  // Global error handler for uncaught errors
+  window.onerror = (message, source, lineno, colno, error) => {
+    window.parent.postMessage({
+      type: 'error',
+      message: message,
+      lineno: lineno,
+      colno: colno,
+      stack: error?.stack
+    }, '*');
+  };
+
+  // Unhandled promise rejection handler
+  window.onunhandledrejection = (event) => {
+    window.parent.postMessage({
+      type: 'error',
+      message: 'Unhandled Promise Rejection: ' + event.reason,
+      stack: event.reason?.stack
+    }, '*');
+  };
+
+  function formatValue(value) {
+    if (value === undefined) return { type: 'undefined' };
+    if (value === null) return { type: 'null' };
+    if (typeof value === 'function') return { type: 'function', value: value.toString() };
+    if (value instanceof Error) return { type: 'error', message: value.message, stack: value.stack };
+    if (typeof value === 'symbol') return { type: 'symbol', value: value.toString() };
+    try {
+      return { type: 'value', value: JSON.parse(JSON.stringify(value)) };
+    } catch {
+      return { type: 'unserializable', value: String(value) };
+    }
+  }
+
+  // Listen for code execution requests
+  window.addEventListener('message', async (event) => {
+    if (event.data.type === 'execute') {
+      const code = event.data.code;
+      const startTime = performance.now();
+
+      try {
+        // Using AsyncFunction to support top-level await
+        const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+        const fn = new AsyncFunction(code);
+        const result = await fn();
+
+        const endTime = performance.now();
+
+        window.parent.postMessage({
+          type: 'result',
+          success: true,
+          value: formatValue(result),
+          executionTime: Math.round((endTime - startTime) * 100) / 100
+        }, '*');
+      } catch (error) {
+        const endTime = performance.now();
+
+        window.parent.postMessage({
+          type: 'result',
+          success: false,
+          error: {
+            message: error.message,
+            stack: error.stack,
+            name: error.name
+          },
+          executionTime: Math.round((endTime - startTime) * 100) / 100
+        }, '*');
+      }
+    }
+  });
+
+  // Signal that sandbox is ready
+  window.parent.postMessage({ type: 'ready' }, '*');
+})();
+</script>
+</body>
+</html>

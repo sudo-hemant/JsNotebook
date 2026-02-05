@@ -1,0 +1,52 @@
+.cell {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.cell:hover {
+  border-color: var(--border-hover);
+}
+
+.cell.selected {
+  border-color: var(--color-primary);
+}
+
+.cell.running {
+  border-color: var(--color-warning);
+}
+
+.cell.error {
+  border-color: var(--color-error);
+}
+
+.cell-status {
+  padding: 4px 8px;
+  font-size: 12px;
+  text-align: right;
+  min-height: 24px;
+}
+
+.status-indicator {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.status-indicator.running {
+  color: var(--color-warning);
+  background: rgba(234, 179, 8, 0.15);
+}
+
+.status-indicator.success {
+  color: var(--color-success);
+  background: rgba(34, 197, 94, 0.15);
+}
+
+.status-indicator.error {
+  color: var(--color-error);
+  background: rgba(239, 68, 68, 0.15);
+}

@@ -1,0 +1,131 @@
+.output-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-secondary);
+}
+
+.output-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  min-height: 70px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.output-panel-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.execution-time {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-family: monospace;
+  background: var(--bg-tertiary);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.output-empty,
+.output-running {
+  padding: 24px;
+  color: var(--text-secondary);
+  text-align: center;
+  font-style: italic;
+}
+
+.output-running {
+  color: var(--color-warning);
+}
+
+.console-output,
+.return-value {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.console-output h3,
+.return-value h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 12px 0;
+}
+
+.console-line {
+  display: flex;
+  gap: 8px;
+  padding: 4px 8px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.console-line.log {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.console-line.error {
+  color: var(--color-error);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.console-line.warn {
+  color: var(--color-warning);
+  background: rgba(234, 179, 8, 0.1);
+}
+
+.console-line.info {
+  color: var(--color-info);
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.console-prefix {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.console-content {
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.result-content {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+  padding: 12px;
+  background: var(--bg-tertiary);
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.result-content pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.result-content.error {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--color-error);
+}
+
+.error-message {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.error-stack {
+  font-size: 11px;
+  opacity: 0.8;
+  margin: 0;
+  white-space: pre-wrap;
+}

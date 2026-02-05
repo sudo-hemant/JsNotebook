@@ -1,0 +1,58 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 8px;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.cell-number {
+  font-size: 13px;
+  font-family: monospace;
+  color: var(--text-secondary);
+  min-width: 32px;
+  padding-right: 4px;
+}
+
+.toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.toolbar-btn:hover:not(:disabled) {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.toolbar-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.toolbar-btn.run-btn {
+  color: var(--color-success);
+}
+
+.toolbar-btn.run-btn:hover:not(:disabled) {
+  background: rgba(34, 197, 94, 0.15);
+}
+
+.toolbar-btn.delete-btn {
+  margin-left: auto;
+}
+
+.toolbar-btn.delete-btn:hover:not(:disabled) {
+  color: var(--color-error);
+  background: rgba(239, 68, 68, 0.15);
+}
