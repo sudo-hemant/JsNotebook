@@ -3,6 +3,7 @@ import { Notebook } from './components/Notebook';
 import { OutputPanel } from './components/OutputPanel';
 import { useCells } from './hooks/useCells';
 import { useCodeExecution } from './hooks/useCodeExecution';
+import { useTheme } from './hooks/useTheme';
 
 const DEFAULT_CODE = `// Welcome to JS Notebook!
 // Cmd+Enter: Run | Cmd+B: New cell | Cmd+↑↓: Navigate
@@ -24,6 +25,7 @@ function App() {
   const [outputWidth, setOutputWidth] = useState(DEFAULT_OUTPUT_WIDTH);
   const [isResizing, setIsResizing] = useState(false);
   const appRef = useRef(null);
+  const { theme, toggleTheme } = useTheme();
 
   const {
     cells,
@@ -36,6 +38,7 @@ function App() {
     addCell,
     deleteCell,
     updateCellCode,
+    moveCell,
     addCellOutput,
     startCellExecution,
     finishCellExecution,
@@ -110,6 +113,9 @@ function App() {
           onClearFocus={clearFocus}
           onGoToPrev={goToPrevCell}
           onGoToNext={goToNextCell}
+          onMoveCell={moveCell}
+          theme={theme}
+          onToggleTheme={toggleTheme}
         />
       </div>
       <div className="resizer" onMouseDown={handleMouseDown} />

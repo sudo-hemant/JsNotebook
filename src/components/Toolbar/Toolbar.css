@@ -7,6 +7,28 @@
   border-bottom: 1px solid var(--border-color);
 }
 
+.drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 28px;
+  color: var(--text-secondary);
+  cursor: grab;
+  font-size: 12px;
+  letter-spacing: -3px;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+}
+
+.drag-handle:hover {
+  opacity: 1;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
 .cell-number {
   font-size: 13px;
   font-family: monospace;

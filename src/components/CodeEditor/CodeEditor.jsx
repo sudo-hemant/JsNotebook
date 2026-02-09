@@ -5,7 +5,7 @@ import { keymap } from '@codemirror/view';
 import { Prec } from '@codemirror/state';
 import './CodeEditor.css';
 
-export function CodeEditor({ value, onChange, onRun, onAddCell, onDelete, onGoToPrev, onGoToNext, autoFocus, editorRef }) {
+export function CodeEditor({ value, onChange, onRun, onAddCell, onDelete, onGoToPrev, onGoToNext, autoFocus, editorRef, theme }) {
   const viewRef = useRef(null);
 
   // Create keymap extension with high precedence to override default behavior
@@ -80,7 +80,7 @@ export function CodeEditor({ value, onChange, onRun, onAddCell, onDelete, onGoTo
         minHeight="60px"
         extensions={[javascript(), runKeymap]}
         onChange={onChange}
-        theme="dark"
+        theme={theme === 'dark' ? 'dark' : 'light'}
         onCreateEditor={(view) => {
           viewRef.current = view;
           if (autoFocus) {

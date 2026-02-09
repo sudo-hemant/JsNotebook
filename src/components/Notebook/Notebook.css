@@ -30,6 +30,12 @@
   font-family: monospace;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .add-cell-btn {
   padding: 8px 16px;
   background: var(--color-primary);
@@ -50,6 +56,15 @@
   flex: 1;
   overflow-y: auto;
   padding-bottom: 40px;
+  padding-top: 8px;
+}
+
+.notebook-cells.is-dragging {
+  cursor: grabbing;
+}
+
+.notebook-cells.is-dragging .cell:not(.dragging) {
+  transition: transform 0.2s ease;
 }
 
 .notebook-footer {

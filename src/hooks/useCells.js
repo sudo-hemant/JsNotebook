@@ -135,6 +135,24 @@ export function useCells(initialCode = '') {
     ));
   }, []);
 
+  const moveCell = useCallback((fromIndex, toIndex) => {
+    setCells(prev => {
+      if (fromIndex === toIndex) return prev;
+      if (prev.length <= 1) return prev;
+      if (fromIndex < 0 || fromIndex >= prev.length || toIndex < 0 || toIndex >= prev.length) {
+        return prev;
+      }
+
+      const newCells = [...prev];
+      const [movedCell] = newCells.splice(fromIndex, 1);
+      newCells.splice(toIndex, 0, movedCell);
+
+      setSelectedCellId(movedCell.id);
+
+      return newCells;
+    });
+  }, []);
+
   const updateCellExecution = useCallback((id, updates) => {
     setCells(prev => prev.map(c =>
       c.id === id ? { ...c, ...updates } : c
@@ -181,6 +199,7 @@ export function useCells(initialCode = '') {
     addCell,
     deleteCell,
     updateCellCode,
+    moveCell,
     updateCellExecution,
     addCellOutput,
     startCellExecution,

@@ -1,8 +1,17 @@
 import './Toolbar.css';
 
-export function Toolbar({ cellNumber, onRun, onDelete, onAddBelow, isRunning, canDelete }) {
+export function Toolbar({ cellNumber, onRun, onDelete, onAddBelow, isRunning, canDelete, onDragStart, onDragEnd }) {
   return (
     <div className="toolbar">
+      <div
+        className="drag-handle"
+        draggable="true"
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        title="Drag to reorder"
+      >
+        ⋮⋮
+      </div>
       <span className="cell-number">[{cellNumber}]</span>
       <button
         className="toolbar-btn run-btn"

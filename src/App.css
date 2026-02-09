@@ -1,5 +1,27 @@
-/* CSS Variables */
-:root {
+/* CSS Variables - Light Theme (Default) */
+:root,
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --bg-tertiary: #eaeef2;
+  --bg-hover: #d0d7de;
+
+  --text-primary: #1f2328;
+  --text-secondary: #656d76;
+
+  --border-color: #d0d7de;
+  --border-hover: #a0a8af;
+
+  --color-primary: #1f883d;
+  --color-primary-hover: #1a7f37;
+  --color-success: #1f883d;
+  --color-error: #cf222e;
+  --color-warning: #bf8700;
+  --color-info: #0969da;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
   --bg-primary: #0d1117;
   --bg-secondary: #161b22;
   --bg-tertiary: #21262d;
